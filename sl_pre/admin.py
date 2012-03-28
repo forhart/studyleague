@@ -1,4 +1,4 @@
-from sl_pre.models import User,Author,Stream,Subject,Semester,Note
+from sl_pre.models import Student,Author,Stream,Subject,Chapter,Semester,Note
 
 from django.contrib import admin
 
@@ -10,10 +10,14 @@ class NoteAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ("first_name","last_name","age","gender")
 
-admin.site.register(User)
+#class ChapterAdmin(admin.modelAdmin):
+#    list_filter = ('subject')
+
+admin.site.register(Student)
 admin.site.register(Author,AuthorAdmin)
 admin.site.register(Stream)
 admin.site.register(Subject)
+admin.site.register(Chapter)
 admin.site.register(Semester)
 
 #admin.site.register(Note)

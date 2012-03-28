@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Create your models here.
 
-class User(models.Model):
+class Student(models.Model):
     GENDER_CHOICES = (
         (u'M',u'Male'),
         (u'F',u'Female')
@@ -31,19 +31,28 @@ class Author(models.Model):
         return self.first_name +" " + self.last_name
 
 class Stream(models.Model):
-    Title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60)
     description = models.TextField(blank=True)
 
     def __unicode__(self):
-        return self.Title 
+        return self.title 
 
 class Subject(models.Model):
-    Title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60)
     description = models.TextField(blank=True)
     
     def __unicode__(self):
-        return self.Title
+        return self.title
 
+class Chapter(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+    subject = models.ForeignKey(Subject)
+
+    def __unicode__(self):
+        return self.title
+    
 class Semester(models.Model):
     SEMESTER_CHOICES = (
         (u'I',    u'First'),
@@ -61,20 +70,22 @@ class Semester(models.Model):
         return self.Semester_name
 
 class Note(models.Model):
-    Title    = models.CharField(max_length=200)
-    Content  = models.TextField(blank=True)
+    title    = models.CharField(max_length=200)
+    content  = models.TextField(blank=True)
 
     author   = models.ManyToManyField(Author)
     subject  = models.ForeignKey(Subject)
-    semester = models.ManyToManyField(Semester)
-    stream   = models.ManyToManyField(Stream)
+    chapter  = models.ForeignKey(Chapter)
+    semester = models.ForeignKey(Semester)
+    stream   = models.ForeignKey(Stream)
+
     is_free  = models.BooleanField()
     def __unicode__(self):
-        return self.Title
+        return self.title
 
 
     class Meta:
-        ordering = ["Title"]
+        ordering = ["title"]
       #  list_filter = ('author') this won't work in meta class
 
                
