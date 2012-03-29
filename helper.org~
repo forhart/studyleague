@@ -1,0 +1,19 @@
+* Helper File
+** Getting Index what query to run 
+*** get stream list
+Stream.object.all()
+
+*** reversal lookup of a foreign key
+
+say... you want to how many notes are there in a single subject. 
+
+s = Subject.object.get(id=1)   // get this from url
+s.note_set() //this will display all notes of id=1 subject
+
+s.chapter_set()
+
+
+
+*** todo 
+- add subject list in stream .. and think about semesters. 
+

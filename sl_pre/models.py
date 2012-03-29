@@ -31,28 +31,12 @@ class Author(models.Model):
         return self.first_name +" " + self.last_name
 
 class Stream(models.Model):
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60,unique=True)
     description = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.title 
 
-class Subject(models.Model):
-    title = models.CharField(max_length=60)
-    description = models.TextField(blank=True)
-    
-    def __unicode__(self):
-        return self.title
-
-class Chapter(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-
-    subject = models.ForeignKey(Subject)
-
-    def __unicode__(self):
-        return self.title
-    
 class Semester(models.Model):
     SEMESTER_CHOICES = (
         (u'I',    u'First'),
@@ -69,6 +53,26 @@ class Semester(models.Model):
     def __unicode__(self):
         return self.Semester_name
 
+
+class Subject(models.Model):
+    title = models.CharField(max_length=60,unique=True)
+    description = models.TextField(blank=True)
+    
+    streams = models.ManyToManyField(Stream)
+    semester = models.ForeignKey(Semester)
+    def __unicode__(self):
+        return self.title
+
+class Chapter(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+    subject = models.ForeignKey(Subject)
+
+    def __unicode__(self):
+        return self.title
+    
+
 class Note(models.Model):
     title    = models.CharField(max_length=200)
     content  = models.TextField(blank=True)
@@ -77,7 +81,7 @@ class Note(models.Model):
     subject  = models.ForeignKey(Subject)
     chapter  = models.ForeignKey(Chapter)
     semester = models.ForeignKey(Semester)
-    stream   = models.ForeignKey(Stream)
+    stream   = models.ManyToManyField(Stream)
 
     is_free  = models.BooleanField()
     def __unicode__(self):
