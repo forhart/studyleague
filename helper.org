@@ -31,3 +31,8 @@ Chapter.objects.get(subject__id=1)
 
 
 
+** how to use templates... 
+- IN settings.py , tell your framework about where is your template_dir
+- import this in your views 
+  from django.shortcuts import render_to_response
+
