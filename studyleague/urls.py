@@ -3,8 +3,9 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
-
+from sl_pre.views import streams_list
 urlpatterns = patterns('',
+    ('^streams/$',streams_list),         
     # Examples:
     # url(r'^$', 'studyleague.views.home', name='home'),
     # url(r'^studyleague/', include('studyleague.foo.urls')),
@@ -14,4 +15,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
      url(r'^admin/', include(admin.site.urls)),
+
+     
 )
