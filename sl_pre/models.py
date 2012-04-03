@@ -32,6 +32,7 @@ class Author(models.Model):
 
 class Stream(models.Model):
     title = models.CharField(max_length=60,unique=True)
+    slug = models.SlugField(max_length=60,unique=True)
     description = models.TextField(blank=True)
 
     def __unicode__(self):
@@ -48,16 +49,17 @@ class Semester(models.Model):
         (u'VII',  u'Seventh'),
         (u'VIII', u'Eigth')
         )
-    Semester_name = models.CharField(max_length=8, choices = SEMESTER_CHOICES)
+    title  = models.CharField(max_length=8, choices = SEMESTER_CHOICES)
+    slug          = models.SlugField(max_length=10,unique=True)
 
     def __unicode__(self):
-        return self.Semester_name
+        return self.title
 
 
 class Subject(models.Model):
     title = models.CharField(max_length=60,unique=True)
     description = models.TextField(blank=True)
-    
+    slug = models.SlugField(max_length=60,unique=True)
     streams = models.ManyToManyField(Stream)
     semester = models.ForeignKey(Semester)
     def __unicode__(self):
@@ -66,7 +68,7 @@ class Subject(models.Model):
 class Chapter(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-
+    slug  = models.SlugField(max_length=100)
     subject = models.ForeignKey(Subject)
 
     def __unicode__(self):
@@ -76,7 +78,7 @@ class Chapter(models.Model):
 class Note(models.Model):
     title    = models.CharField(max_length=200)
     content  = models.TextField(blank=True)
-
+    slug     = models.SlugField(max_length=200,unique=True)
     author   = models.ManyToManyField(Author)
     subject  = models.ForeignKey(Subject)
     chapter  = models.ForeignKey(Chapter)
