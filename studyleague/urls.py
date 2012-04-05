@@ -1,16 +1,29 @@
 from django.conf.urls import patterns, include, url
+from studyleague import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 from sl_pre.views import stream_list,plan_list, semester_list
 urlpatterns = patterns('',
-  url(r'^admin/', include(admin.site.urls)),                     
+  
+                    url(r'^admin/', include(admin.site.urls)),
+(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
+                        {'document_root': '/home/windeor/arel/studyleague/studyleague/media/', 'show_indexes': True}),
+                      
     (r'^$',stream_list),
     (r'^plans/',plan_list),
    url(
         r'^(?P<stream_slug>[^/]+)',semester_list),                   
-    # Examples:
+    
+
+
+    #site_media url 
+
+  
+
+          # Examples:
+
     # url(r'^$', 'studyleague.views.home', name='home'),
     # url(r'^studyleague/', include('studyleague.foo.urls')),
 

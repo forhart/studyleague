@@ -73,7 +73,22 @@ class Chapter(models.Model):
 
     def __unicode__(self):
         return self.title
+
+class SubChapter(models.Model):
+    title = models.CharField(max_length=100)
+    slug  = models.SlugField(max_length=100)
+    description = models.TextField(blank=True)
     
+    Chapter = models.ForeignKey(Chapter)
+
+    def __unicode__(self):
+        return self.title
+    
+class Test(models.Model):
+    pass
+
+class Question(models.Model):
+    pass
 
 class Note(models.Model):
     title    = models.CharField(max_length=200)
