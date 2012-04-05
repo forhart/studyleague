@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     (r'^ckeditor/',include('ckeditor.urls')),
     url(r'^admin/', include(admin.site.urls)),
     (r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,'show_indexes':True}), 
-
+    (r'^upload/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.UPLOAD_ROOT,'show_indexes':True}), 
+                   
 #below was used for dojo's editor
 #(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
 #                        {'document_root': '/home/windeor/arel/studyleague/studyleague/media/', 'show_indexes': True}),
