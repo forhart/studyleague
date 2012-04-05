@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import admin
-
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Student(models.Model):
@@ -33,7 +33,7 @@ class Author(models.Model):
 class Stream(models.Model):
     title = models.CharField(max_length=60,unique=True)
     slug = models.SlugField(max_length=60,unique=True)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True)
 
     def __unicode__(self):
         return self.title 
@@ -58,7 +58,7 @@ class Semester(models.Model):
 
 class Subject(models.Model):
     title = models.CharField(max_length=60,unique=True)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True)
     slug = models.SlugField(max_length=60,unique=True)
     streams = models.ManyToManyField(Stream)
     semester = models.ForeignKey(Semester)
@@ -67,7 +67,7 @@ class Subject(models.Model):
 
 class Chapter(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True)
     slug  = models.SlugField(max_length=100)
     subject = models.ForeignKey(Subject)
 
@@ -77,7 +77,7 @@ class Chapter(models.Model):
 class SubChapter(models.Model):
     title = models.CharField(max_length=100)
     slug  = models.SlugField(max_length=100)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True)
     
     Chapter = models.ForeignKey(Chapter)
 
@@ -92,7 +92,7 @@ class Question(models.Model):
 
 class Note(models.Model):
     title    = models.CharField(max_length=200)
-    content  = models.TextField(blank=True)
+    content  = RichTextField(blank=True)
     slug     = models.SlugField(max_length=200,unique=True)
     author   = models.ManyToManyField(Author)
     subject  = models.ForeignKey(Subject)

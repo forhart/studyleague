@@ -55,12 +55,12 @@ MEDIA_ROOT = '/home/windeor/arel/studyleague/studyleague/media/media/'
 
 CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 
-CKEDITOR_UPLOAD_PATH = '/home/windeor/arel/studyleague/studyleague/uploads/'
+CKEDITOR_UPLOAD_PATH = '/home/windeor/arel/studyleague/studyleague/media/media/uploads/'
 
-CKEDITOR_UPLOAD_PREFIX = 'http://localhost:8000/media/ckuploads/'
+CKEDITOR_UPLOAD_PREFIX = '/media/uploads/'
 
 CKEDITOR_CONFIGS = {
-    'awesome_ckeditor': {
+    'default': {
         'toolbar': 'Full',
     },
 }

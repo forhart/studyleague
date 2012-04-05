@@ -1,20 +1,25 @@
 from django.conf.urls import patterns, include, url
 from studyleague import settings
-
+import ckeditor 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 from sl_pre.views import stream_list,plan_list, semester_list
 urlpatterns = patterns('',
-  
-                    url(r'^admin/', include(admin.site.urls)),
-(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
-                        {'document_root': '/home/windeor/arel/studyleague/studyleague/media/', 'show_indexes': True}),
+    (r'^ckeditor/',include('ckeditor.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    (r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,'show_indexes':True}), 
+
+#below was used for dojo's editor
+#(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
+#                        {'document_root': '/home/windeor/arel/studyleague/studyleague/media/', 'show_indexes': True}),
                       
     (r'^$',stream_list),
     (r'^plans/',plan_list),
-   url(
-        r'^(?P<stream_slug>[^/]+)',semester_list),                   
+
+     url(
+        r'^(?P<stream_slug>[^/]+)',semester_list
+        ),                   
     
 
 
