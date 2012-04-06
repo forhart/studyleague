@@ -39,9 +39,7 @@ class StreamAdmin(admin.ModelAdmin):
 class SemesterAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug":('title',)}
     
-class ChapterAdmin(admin.ModelAdmin):
-    list_display = ('title','subject',)
-    prepopulated_fields = {"slug":('title',)}
+
     
 #    Media=CommonMedia
 
@@ -50,11 +48,17 @@ class SubChapterAdmin(admin.ModelAdmin):
     list_filter = ('chapter','chapter__subject',)
     prepopulated_fields = {"slug":('title',)}
 
-#    Media = CommonMedia
-#    list_filter = ('chapter',)
+class SubChapterInline(admin.TabularInline):
+    model = SubChapter
+    exclude =         ('description',)
+    prepopulated_fields = {'slug':('title',)}
 
-#class ChapterAdmin(admin.modelAdmin):
-#    list_filter = ('subject')
+class ChapterAdmin(admin.ModelAdmin):
+    list_display = ('title','subject',)
+    prepopulated_fields = {"slug":('title',)}
+    inlines = [ SubChapterInline , ]
+
+
 
 admin.site.register(Student)
 admin.site.register(Author,AuthorAdmin)

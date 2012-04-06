@@ -78,7 +78,7 @@ class Chapter(models.Model):
     def __unicode__(self):
         return self.title
 
-     
+
 
 class SubChapter(models.Model):
     title = models.CharField(max_length=100)
