@@ -27,6 +27,9 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title','semester','numOfChapters')
     list_filter = ('streams','semester')
     prepopulated_fields = {'slug':('title',)}
+    filter_horizontal = ('streams',)
+
+   
 #    Media = CommonMedia #this brings dojo's editor in admin panel
 
 class StreamAdmin(admin.ModelAdmin):
@@ -37,14 +40,16 @@ class SemesterAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug":('title',)}
     
 class ChapterAdmin(admin.ModelAdmin):
+    list_display = ('title','subject',)
     prepopulated_fields = {"slug":('title',)}
+    
 #    Media=CommonMedia
 
 class SubChapterAdmin(admin.ModelAdmin):
-    list_display=('Chapter',)   #change this variable name to lowercase
-    list_filter = ('Chapter','Chapter__subject',)
+    list_display=('title','chapter',)   #change this variable name to lowercase
+    list_filter = ('chapter','chapter__subject',)
     prepopulated_fields = {"slug":('title',)}
-    
+
 #    Media = CommonMedia
 #    list_filter = ('chapter',)
 

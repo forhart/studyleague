@@ -78,12 +78,14 @@ class Chapter(models.Model):
     def __unicode__(self):
         return self.title
 
+     
+
 class SubChapter(models.Model):
     title = models.CharField(max_length=100)
     slug  = models.SlugField(max_length=100)
     description = RichTextField(blank=True)
     
-    Chapter = models.ForeignKey(Chapter)
+    chapter = models.ForeignKey(Chapter)
 
     def __unicode__(self):
         return self.title
