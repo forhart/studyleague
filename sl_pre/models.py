@@ -62,8 +62,12 @@ class Subject(models.Model):
     slug = models.SlugField(max_length=60,unique=True)
     streams = models.ManyToManyField(Stream)
     semester = models.ForeignKey(Semester)
+
     def __unicode__(self):
         return self.title
+
+    def numOfChapters(self):
+        return self.chapter_set.count()
 
 class Chapter(models.Model):
     title = models.CharField(max_length=100)
