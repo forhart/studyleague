@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib import admin
 from ckeditor.fields import RichTextField
+from django.forms import extras
+from django import forms
+#import settings
+ #for date of birth field
 # Create your models here.
 
 class Student(models.Model):
@@ -8,10 +12,19 @@ class Student(models.Model):
         (u'M',u'Male'),
         (u'F',u'Female')
         )
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
-    age = models.IntegerField()
-    gender = models.CharField(max_length=2, choices = GENDER_CHOICES)
+    first_name    = models.CharField(max_length=60)
+    last_name     = models.CharField(max_length=60)
+    age           = models.IntegerField()
+    gender        = models.CharField(max_length=2, choices = GENDER_CHOICES)
+    address       = models.TextField(max_length=500)
+    email         = models.EmailField(max_length=254)
+    phone_number  = models.IntegerField(max_length=10)
+    date_of_birht = forms.DateField(widget=extras.SelectDateWidget)
+    #user may not have twitter of facebook id. 
+    facebook_id   = models.CharField(max_length=100,blank=True)
+    twitter_id    = models.CharField(max_length=100,blank=True)
+    college_name  = models.CharField(max_length= 200,blank=True)
+#    your_pic      = models.ImageField(upload_to= settings.MEDIA_ROOT)
 
     def __unicode__(self):
         return self.first_name +" " + self.last_name
