@@ -1,5 +1,5 @@
 from sl_pre.models import Student,Author,Stream,Subject,Chapter,Semester,Note,SubChapter,SubChapterSolved,SubChapterUnsolved,SubChapterVideo
-from sl_pre.models import SubChapterTheory
+from sl_pre.models import SubChapterTheory,SubjectTestPaper
 from studyleague import settings
 from django.contrib import admin
 
@@ -24,12 +24,24 @@ class AuthorAdmin(admin.ModelAdmin):
     list_display = ("first_name","last_name","age","gender")
 #    Media = CommonMedia
 
+class SubjectTestPaperAdmin(admin.ModelAdmin):
+    list_display        = ('title','Subject')
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ]   
+
+class SubjectTestPaperInline(admin.TabularInline):
+    model = SubjectTestPaper
+    prepopulated_fields = {'slug':('title',)}
+    extra = 1
+
+  
+
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title','semester','numOfChapters')
     list_filter = ('streams','semester')
     prepopulated_fields = {'slug':('title',)}
     filter_horizontal = ('streams',)
-
+    inlines = [SubjectTestPaperInline,]
    
 #    Media = CommonMedia #this brings dojo's editor in admin panel
 

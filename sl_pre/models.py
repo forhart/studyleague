@@ -69,18 +69,36 @@ class Semester(models.Model):
         return self.title
 
 
+#Subject Model begins here
+    
 class Subject(models.Model):
     title = models.CharField(max_length=60,unique=True)
-    description = RichTextField(blank=True)
     slug = models.SlugField(max_length=60,unique=True)
+    description = RichTextField(blank=True)
     streams = models.ManyToManyField(Stream)
     semester = models.ForeignKey(Semester)
-
+    syllabus = models.FileField(upload_to="/syllabus/",blank=True)
     def __unicode__(self):
         return self.title
 
     def numOfChapters(self):
         return self.chapter_set.count()
+
+
+class SubjectTestPaper(models.Model):
+    title   = models.CharField(max_length=100)
+    slug    = models.SlugField(max_length=100)
+    link    = models.TextField(blank = True)
+    subject = models.ForeignKey(Subject)
+
+class SubjectUpdates(models.Model):
+    title = models.CharField(max_length=100)
+    slug  = models.SlugField(max_length=100)
+    description = models.TextField()
+    #foreign_key 
+    subject = models.ForeignKey(Subject)
+
+#Subject Model Ends here
 
 class Chapter(models.Model):
     title = models.CharField(max_length=100)
