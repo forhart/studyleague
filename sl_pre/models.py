@@ -103,13 +103,13 @@ class SubjectTestPaper(models.Model):
     link    = models.TextField(blank = True)
     subject = models.ForeignKey(Subject)
 
-class SubjectUpdates(models.Model):
+class SubjectUpdate(models.Model):
     title = models.CharField(max_length=100)
     slug  = models.SlugField(max_length=100)
     description = models.TextField()
     #foreign_key 
     subject = models.ForeignKey(Subject)
-
+    #modifield content of the subject needs to be linked here .... some logic missing 
 #Subject Model Ends here
 
 class Chapter(models.Model):
@@ -121,10 +121,14 @@ class Chapter(models.Model):
     def __unicode__(self):
         return self.title
 
-    def numOfSubChapters(self):
-        return self.subchapter_set.count()
+#    def numOfSubChapters(self):
+#        return self.subchapter_set.count()
 
-class SubChapter(models.Model):
+    def numOfTopics(self):
+        return self.topic_set.count()
+
+#Topic Section begins here 
+class Topic(models.Model):
     title = models.CharField(max_length=100)
     slug  = models.SlugField(max_length=100)
     description = RichTextField(blank=True)
@@ -134,34 +138,35 @@ class SubChapter(models.Model):
     def __unicode__(self):
         return self.title
 
-class SubChapterTheory(models.Model):
+class TopicTheory(models.Model):
     title = models.CharField(max_length=100)
     slug  = models.CharField(max_length=100)
     link = models.TextField(blank=True)
 
-    subchapter = models.ForeignKey(SubChapter)
+    topic = models.ForeignKey(Topic)
 
 
-class SubChapterSolved(models.Model):
+class TopicSolved(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
     link = models.TextField(blank=True)
-    subchapter = models.ForeignKey(SubChapter)
+    topic = models.ForeignKey(Topic)
 
-class SubChapterUnsolved(models.Model):
+class TopicUnsolved(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
     link = models.TextField(blank = True)
     
-    subchapter = models.ForeignKey(SubChapter)
+    topic  = models.ForeignKey(Topic)
 
-class SubChapterVideo(models.Model):
+class TopicVideo(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
     link = models.TextField()
     
-    subchapter = models.ForeignKey(SubChapter)
+    topic = models.ForeignKey(Topic)
     
+
     
 class Test(models.Model):
     pass
@@ -169,25 +174,10 @@ class Test(models.Model):
 class Question(models.Model):
     pass
 
-class Note(models.Model):
-    title    = models.CharField(max_length=200)
-    content  = RichTextField(blank=True)
-    slug     = models.SlugField(max_length=200,unique=True)
-    author   = models.ManyToManyField(Author)
-    subject  = models.ForeignKey(Subject)
-    chapter  = models.ForeignKey(Chapter)
-    semester = models.ForeignKey(Semester)
-    stream   = models.ManyToManyField(Stream)
-
-    is_free  = models.BooleanField()
-    def __unicode__(self):
-        return self.title
 
 
-    class Meta:
-        ordering = ["title"]
-      #  list_filter = ('author') this won't work in meta class
+
 
                
-class Plan(models.Model):
+class price(models.Model):
     pass
