@@ -7,6 +7,17 @@ from django import forms
  #for date of birth field
 # Create your models here.
 
+
+class Stream(models.Model):
+    title = models.CharField(max_length=60,unique=True)
+    slug = models.SlugField(max_length=60,unique=True)
+    description = RichTextField(blank=True)
+
+    def __unicode__(self):
+        return self.title 
+
+
+
 class Student(models.Model):
     GENDER_CHOICES = (
         (u'M',u'Male'),
@@ -14,16 +25,23 @@ class Student(models.Model):
         )
     first_name    = models.CharField(max_length=60)
     last_name     = models.CharField(max_length=60)
+    date_of_birth = forms.DateField(widget=extras.SelectDateWidget)
+    email         = models.EmailField(max_length=254)
     age           = models.IntegerField()
     gender        = models.CharField(max_length=2, choices = GENDER_CHOICES)
-    address       = models.TextField(max_length=500)
-    email         = models.EmailField(max_length=254)
+    home_town     = models.CharField(max_length=100)
+    current_city  = models.CharField(max_length=100)
     phone_number  = models.IntegerField(max_length=10)
-    date_of_birht = forms.DateField(widget=extras.SelectDateWidget)
-    #user may not have twitter of facebook id. 
+    college_name  = models.CharField(max_length= 200,blank=True)
+    stream        = models.ForeignKey(Stream)
+#    address       = models.TextField(max_length=500)
+    about_myself  = models.TextField(blank=True)
+    hobbies       = models.TextField(blank=True)
+
+    #user may not have twitter of facebook id. so keep these options as non mandatory
     facebook_id   = models.CharField(max_length=100,blank=True)
     twitter_id    = models.CharField(max_length=100,blank=True)
-    college_name  = models.CharField(max_length= 200,blank=True)
+    
 #    your_pic      = models.ImageField(upload_to= settings.MEDIA_ROOT)
 
     def __unicode__(self):
@@ -43,13 +61,7 @@ class Author(models.Model):
     def __unicode__(self):
         return self.first_name +" " + self.last_name
 
-class Stream(models.Model):
-    title = models.CharField(max_length=60,unique=True)
-    slug = models.SlugField(max_length=60,unique=True)
-    description = RichTextField(blank=True)
 
-    def __unicode__(self):
-        return self.title 
 
 class Semester(models.Model):
     SEMESTER_CHOICES = (
@@ -102,8 +114,8 @@ class SubjectUpdates(models.Model):
 
 class Chapter(models.Model):
     title = models.CharField(max_length=100)
-    description = RichTextField(blank=True)
     slug  = models.SlugField(max_length=100)
+    description = RichTextField(blank=True)
     subject = models.ForeignKey(Subject)
 
     def __unicode__(self):
