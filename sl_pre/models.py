@@ -78,7 +78,8 @@ class Chapter(models.Model):
     def __unicode__(self):
         return self.title
 
-
+    def numOfSubChapters(self):
+        return self.subchapter_set.count()
 
 class SubChapter(models.Model):
     title = models.CharField(max_length=100)
@@ -89,6 +90,35 @@ class SubChapter(models.Model):
 
     def __unicode__(self):
         return self.title
+
+class SubChapterTheory(models.Model):
+    title = models.CharField(max_length=100)
+    slug  = models.CharField(max_length=100)
+    link = models.TextField(blank=True)
+
+    subchapter = models.ForeignKey(SubChapter)
+
+
+class SubChapterSolved(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    link = models.TextField(blank=True)
+    subchapter = models.ForeignKey(SubChapter)
+
+class SubChapterUnsolved(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    link = models.TextField(blank = True)
+    
+    subchapter = models.ForeignKey(SubChapter)
+
+class SubChapterVideo(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    link = models.TextField()
+    
+    subchapter = models.ForeignKey(SubChapter)
+    
     
 class Test(models.Model):
     pass

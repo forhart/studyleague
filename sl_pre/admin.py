@@ -1,4 +1,5 @@
-from sl_pre.models import Student,Author,Stream,Subject,Chapter,Semester,Note,SubChapter
+from sl_pre.models import Student,Author,Stream,Subject,Chapter,Semester,Note,SubChapter,SubChapterSolved,SubChapterUnsolved,SubChapterVideo
+from sl_pre.models import SubChapterTheory
 from studyleague import settings
 from django.contrib import admin
 
@@ -43,20 +44,69 @@ class SemesterAdmin(admin.ModelAdmin):
     
 #    Media=CommonMedia
 
+
+
+#Following two classes are added to add links to pdf on the subchapter pad itself. 
+
+class SubChapterTheoryAdmin(admin.ModelAdmin):
+    list_display        = ('title','subchapter')
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ] 
+
+class SubChapterTheoryInline(admin.TabularInline):
+    model = SubChapterTheory
+    prepopulated_fields = { "slug":("title",)}
+    extra = 1
+    
+class SubChapterSolvedAdmin(admin.ModelAdmin):
+    list_display        = ('title','subchapter')
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ] 
+    
+class SubChapterSolvedInline(admin.TabularInline):
+    model = SubChapterSolved
+    prepopulated_fields = {'slug':('title',)}
+    extra = 1
+
+class SubChapterUnSolvedAdmin(admin.ModelAdmin):
+    list_display        = ('title','subchapter')
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ] 
+    
+class SubChapterUnsolvedInline(admin.TabularInline):
+    model = SubChapterUnsolved
+    prepopulated_fields = {'slug':('title',)}
+    extra = 1
+
+class SubChapterVideoAdmin(admin.ModelAdmin):
+    list_display        = ('title','subchapter')
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ] 
+    
+class SubChapterVideoInline(admin.TabularInline):
+    model = SubChapterVideo
+    prepopulated_fields = {'slug':('title',)}
+    extra = 1
+    
+
 class SubChapterAdmin(admin.ModelAdmin):
     list_display=('title','chapter',)   #change this variable name to lowercase
-    list_filter = ('chapter','chapter__subject',)
+    list_filter = ('chapter','chapter__subject','chapter__subject__streams','chapter__subject__semester')
     prepopulated_fields = {"slug":('title',)}
+    search_fields = ['title' ]
+    inlines = [SubChapterSolvedInline,SubChapterUnsolvedInline,SubChapterVideoInline,SubChapterTheoryInline]
 
 class SubChapterInline(admin.TabularInline):
     model = SubChapter
     exclude =         ('description',)
     prepopulated_fields = {'slug':('title',)}
 
+
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ('title','subject',)
+    list_display = ('title','subject','numOfSubChapters',)
     prepopulated_fields = {"slug":('title',)}
     inlines = [ SubChapterInline , ]
+    list_filter = ['subject__streams','subject__semester']
 
 
 
