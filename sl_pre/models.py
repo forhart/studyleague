@@ -7,6 +7,11 @@ from django import forms
  #for date of birth field
 # Create your models here.
 
+class EventsUpdate(models.Model):
+    title = models.CharField(max_length=300)
+    slug  = models.SlugField(max_length=300)
+    description = RichTextField(blank=True)
+
 
 class Stream(models.Model):
     title = models.CharField(max_length=60,unique=True)

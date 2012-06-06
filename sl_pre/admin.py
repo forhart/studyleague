@@ -1,5 +1,5 @@
 from sl_pre.models import Student,Stream,Subject,Chapter,Semester,Topic,TopicTheory,TopicSolved,TopicUnsolved,TopicVideo
-from sl_pre.models import SubjectTestPaper
+from sl_pre.models import SubjectTestPaper,EventsUpdate
 from studyleague import settings
 from django.contrib import admin
 
@@ -23,6 +23,12 @@ from django.contrib import admin
 #class AuthorAdmin(admin.ModelAdmin):
 #    list_display = ("first_name","last_name","age","gender")
 #    Media = CommonMedia
+
+class EventsUpdateAdmin(admin.ModelAdmin):
+    list_display        = ('title',)
+    prepopulated_fields = { "slug":("title",)}
+    search_fields       = [ 'title' ]   
+
 
 class SubjectTestPaperAdmin(admin.ModelAdmin):
     list_display        = ('title','Subject')
@@ -133,3 +139,4 @@ admin.site.register(Semester,SemesterAdmin)
 #Here when we use NoteAdmin to configure admin page use following code
 #admin.site.register(Note,NoteAdmin)
 admin.site.register(Topic,TopicAdmin)
+admin.site.register(EventsUpdate,EventsUpdateAdmin)
